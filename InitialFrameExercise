@@ -14,7 +14,7 @@ MLTT treats *propositions as types* and *proofs as programs* (via the Curry-Howa
 This isn't abstraction; MLTT's computational content (beta reductions, eta conversions) makes it executable, as seen in proof assistants like Agda or Coq. Prior work hints at viability: Chris Martens' Ceptre system (2010s) uses linear types (a type theory variant) for interactive drama, modeling resources like "character motivations" that consume/produce narratively without duplication—directly inspiring trope "conservation" to avoid overused clichés. Extending this with MLTT adds *dependence* for richer constraints, and LLMs supercharge generation within those bounds.
 
 ### A Proposed Dynamic Storytelling Engine: "TropoType"
-Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed modules, and multiple LLM "substrates" (specialized agents, e.g., one for dialogue, one for world-building) collaborate via your patent's mechanisms. This beats Storytron by:
+Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed modules, and multiple LLM "substrates" (specialized agents, e.g., one for dialogue, one for world-building) collaborate via the patent's mechanisms. This beats Storytron by:
 
 - **Dynamic Emergence**: LLMs generate novel content (e.g., trope twists) while dependent types enforce global consistency—no more hand-crafted storylets.
 
@@ -22,7 +22,7 @@ Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed mo
 
 - **Structure Preservation**: Projection updates \(v'_i = \alpha v_i + (1-\alpha) \sum_{j \neq i} \tilde{w}_{ij} \Delta t_j P_j(v_i)\) "project" LLM suggestions onto a trope's subspace, retaining unique flavors (e.g., cultural trope variants) without averaging into blandness.
 
-- **Verification**: Identity types + zero-knowledge proofs (from your system) let users "prove" a generated story satisfies custom predicates (e.g., "diverse representation") without revealing internals.
+- **Verification**: Identity types + zero-knowledge proofs (from the system) let users "prove" a generated story satisfies custom predicates (e.g., "diverse representation") without revealing internals.
 
 #### High-Level Architecture
 1. **Type Definition Layer** (MLTT Core):
@@ -46,13 +46,13 @@ Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed mo
      - \(H\): Entropy of novelty (e.g., surprisal score on trope rarity).
      - \(\Gamma\): Structure matrix (MLTT type dependencies).
      - \(\Omega\): Compute cost (prompt length).
-   - **Orchestration Cycle** (Pseudocode, extending your `OrchestrationEngine`):
+   - **Orchestration Cycle** (Pseudocode, extending the `OrchestrationEngine`):
      ```
      class NarrativeEngine(MLTTTypeChecker):
          def __init__(self, llm_agents, trope_types, V_s, alpha=0.7, theta_fork=0.5, theta_comp=0.2):
              self.agents = llm_agents  # List of LLM substrates
              self.types = trope_types  # MLTT trope family
-             # ... (your params)
+             # ... (the params)
 
          def generate_step(self, current_story: Story, user_input):
              # 1. LLM Proposals: Each agent generates trope extension
@@ -61,7 +61,7 @@ Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed mo
              # 2. Type-Check Dependencies
              typed_proposals = [self.types.check(p, current_story) for p in proposals]  # Fail if !inhabits
 
-             # 3. Compute PKL Divergences (your perpendicular_divergence)
+             # 3. Compute PKL Divergences (the perpendicular_divergence)
              D_perp = np.zeros((N, N))  # N = len(agents)
              for i, j in pairs:
                  D_perp[i,j] = perpendicular_divergence(typed_proposals[i], typed_proposals[j])
@@ -70,7 +70,7 @@ Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed mo
              forks = [(i,j) for i,j if D_perp[i,j] > theta_fork]  # Branch on high independence
              compromises = [(i,j) for i,j if D_perp[i,j] < theta_comp]  # Penalize convergence
 
-             # 5. Temporal Modulation & Projections (your formulas)
+             # 5. Temporal Modulation & Projections (the formulas)
              deltas = [temporal_modulation(agent, V_s) for agent in self.agents]
              projections = [compute_projection_operator(agent) for agent in self.agents]
              blended = alpha * current_story.v + (1-alpha) * weighted_projection(deltas, projections, typed_proposals)
@@ -81,7 +81,7 @@ Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed mo
 
              return Story.Step(final_narrative, current_story), proof
      ```
-     - **Why Better?** In benchmarks (prophetic, per your note), this yields 2.1× faster convergence to engaging stories, 73% less "trope bloat" (memory via projections), and 21% higher "diversity TPR" (true positives for novel arcs) vs. Storytron's static rules.
+     - **Why Better?** In benchmarks (prophetic, per the note), this yields 2.1× faster convergence to engaging stories, 73% less "trope bloat" (memory via projections), and 21% higher "diversity TPR" (true positives for novel arcs) vs. Storytron's static rules.
 
 3. **User Interaction**:
    - Input as "values" indexing types (e.g., "Player chooses mercy" → dependent branch).
@@ -89,4 +89,4 @@ Imagine **TropoType**, an LLM-orchestrated engine where tropes are MLTT-typed mo
    - Scalable to multi-user: Substrates coordinate across sessions, modulating for group entropy.
 
 ### Feasibility & Next Steps
-Implementable on commodity hardware (PyTorch for LLMs, Agda/Coq for type-checking—your POSITA can bridge via embeddings). Early prototypes could adapt Ceptre's linear logic to full MLTT for dependence. Test against non-IID "user data" (diverse playstyles) to validate improvements, echoing your federated learning gains. This hybrid—MLTT for structure, your metrics for coordination, LLMs for creativity—transforms tropes from static motifs into a living, equitable narrative manifold.
+Implementable on commodity hardware (PyTorch for LLMs, Agda/Coq for type-checking—the POSITA can bridge via embeddings). Early prototypes could adapt Ceptre's linear logic to full MLTT for dependence. Test against non-IID "user data" (diverse playstyles) to validate improvements, echoing the federated learning gains. This hybrid—MLTT for structure, the metrics for coordination, LLMs for creativity—transforms tropes from static motifs into a living, equitable narrative manifold.
